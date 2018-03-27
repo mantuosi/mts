@@ -14,7 +14,7 @@
   
   
   <servlet>
-      <servlet-name>web</servlet-name>
+      <servlet-name>console</servlet-name>
       <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
       
       <init-param>
@@ -22,15 +22,15 @@
       <param-value>classpath:springmvc-console.xml</param-value>
       
       </init-param>
-      
+	<load-on-startup>1</load-on-startup>
       
   </servlet>
   
   <servlet-mapping>
 		<!-- / :拦截所有请求 （但不包括.jsp) .js .png .css （配置对静态资源放行） /* :拦截所有请求 真全拦截 （基本上不用） 
 			*.do ： .do -->
-		<servlet-name>web</servlet-name>
-		<url-pattern>/</url-pattern>
+		<servlet-name>console</servlet-name>
+		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
   
   
