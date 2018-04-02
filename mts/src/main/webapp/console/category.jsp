@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Home</title>
+<title>栏目 - 异清轩博客管理系统</title>
+</head>
 <body class="user-select">
 <section class="container-fluid">
   <header>
@@ -40,27 +41,27 @@
   <div class="row">
     <aside class="col-sm-3 col-md-2 col-lg-2 sidebar">
       <ul class="nav nav-sidebar">
-        <li class="active"><a href="index">报告</a></li>
+        <li><a href="index">报告</a></li>
       </ul>
       <ul class="nav nav-sidebar">
         <li><a href="article">文章</a></li>
         <li><a href="notice">公告</a></li>
         <li><a href="comment">评论</a></li>
-        <li><a data-toggle="tooltip" data-placement="bottom" title="网站暂无留言功能">留言</a></li>
+        <li><a data-toggle="tooltip" data-placement="top" title="网站暂无留言功能">留言</a></li>
       </ul>
       <ul class="nav nav-sidebar">
-        <li><a href="category">栏目</a></li>
+        <li class="active"><a href="category">栏目</a></li>
         <li><a class="dropdown-toggle" id="otherMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">其他</a>
           <ul class="dropdown-menu" aria-labelledby="otherMenu">
             <li><a href="flink">友情链接</a></li>
-            <li><a data-toggle="modal" data-target="#areDeveloping">访问记录</a></li>
+            <li><a href="loginlog">访问记录</a></li>
           </ul>
         </li>
       </ul>
       <ul class="nav nav-sidebar">
         <li><a class="dropdown-toggle" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">用户</a>
           <ul class="dropdown-menu" aria-labelledby="userMenu">
-            <li><a data-toggle="modal" data-target="#areDeveloping">管理用户组</a></li>
+            <li><a href="#">管理用户组</a></li>
             <li><a href="manage-user">管理用户</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="loginlog">管理登录日志</a></li>
@@ -69,9 +70,9 @@
         <li><a class="dropdown-toggle" id="settingMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">设置</a>
           <ul class="dropdown-menu" aria-labelledby="settingMenu">
             <li><a href="setting">基本设置</a></li>
-            <li><a href="readset">阅读设置</a></li>
+            <li><a href="readset">用户设置</a></li>
             <li role="separator" class="divider"></li>
-            <li><a data-toggle="modal" data-target="#areDeveloping">安全配置</a></li>
+            <li><a href="#">安全配置</a></li>
             <li role="separator" class="divider"></li>
             <li class="disabled"><a>扩展菜单</a></li>
           </ul>
@@ -79,98 +80,94 @@
       </ul>
     </aside>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-lg-10 col-md-offset-2 main" id="main">
-      <h1 class="page-header">信息总览</h1>
-      <div class="row placeholders">
-        <div class="col-xs-6 col-sm-3 placeholder">
-          <h4>文章</h4>
-          <span class="text-muted">0 条</span> </div>
-        <div class="col-xs-6 col-sm-3 placeholder">
-          <h4>评论</h4>
-          <span class="text-muted">0 条</span> </div>
-        <div class="col-xs-6 col-sm-3 placeholder">
-          <h4>友链</h4>
-          <span class="text-muted">0 条</span> </div>
-        <div class="col-xs-6 col-sm-3 placeholder">
-          <h4>访问量</h4>
-          <span class="text-muted">0</span> </div>
-      </div>
-      <h1 class="page-header">状态</h1>
-      <div class="table-responsive">
-        <table class="table table-striped table-hover">
-          <tbody>
-            <tr>
-              <td>登录者: <span>admin</span>，这是您第 <span>13</span> 次登录</td>
-            </tr>
-            <tr>
-              <td>上次登录时间: 2016-01-08 15:50:28 , 上次登录IP: ::1:55570</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <h1 class="page-header">系统信息</h1>
-      <div class="table-responsive">
-        <table class="table table-striped table-hover">
-          <thead>
-            <tr> </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>管理员个数:</td>
-              <td>2 人</td>
-              <td>服务器软件:</td>
-              <td>Apache/2.4.10 (Win32) OpenSSL/1.0.1i mod_fcgid/2.3.9</td>
-            </tr>
-            <tr>
-              <td>浏览器:</td>
-              <td>Chrome47</td>
-              <td>PHP版本:</td>
-              <td>5.6.1</td>
-            </tr>
-            <tr>
-              <td>操作系统:</td>
-              <td>Windows 10</td>
-              <td>PHP运行方式:</td>
-              <td>CGI-FCGI</td>
-            </tr>
-            <tr>
-              <td>登录者IP:</td>
-              <td>::1:55570</td>
-              <td>MYSQL版本:</td>
-              <td>5.5.40</td>
-            </tr>
-            <tr>
-              <td>程序版本:</td>
-              <td class="version">YlsatCMS 1.0 <font size="-6" color="#BBB">(20160108160215)</font></td>
-              <td>上传文件:</td>
-              <td>可以 <font size="-6" color="#BBB">(最大文件：2M ，表单：8M )</font></td>
-            </tr>
-            <tr>
-              <td>程序编码:</td>
-              <td>UTF-8</td>
-              <td>当前时间:</td>
-              <td>2016-01-08 15:50:30</td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr></tr>
-          </tfoot>
-        </table>
-      </div>
-      <footer>
-        <h1 class="page-header">程序信息</h1>
-        <div class="table-responsive">
-        <table class="table table-striped table-hover">
-          <tbody>
-            <tr>
-              <td><span style="display:inline-block; width:8em">版权所有</span> POWERED BY WY ALL RIGHTS RESERVED</td>
-            </tr>
-            <tr>
-              <td><span style="display:inline-block;width:8em">页面加载时间</span> PROCESSED IN 1.0835s  SECONDS 更多模板：<a href="http://www.mycodes.net/" target="_blank">源码之家</a></td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="row">
+        <div class="col-md-5">
+          <h1 class="page-header">添加</h1>
+          <form action="/Category/add" method="post" autocomplete="off">
+            <div class="form-group">
+              <label for="category-name">栏目名称</label>
+              <input type="text" id="category-name" name="name" class="form-control" placeholder="在此处输入栏目名称" required autocomplete="off">
+              <span class="prompt-text">这将是它在站点上显示的名字。</span> </div>
+            <div class="form-group">
+              <label for="category-alias">栏目别名</label>
+              <input type="text" id="category-alias" name="alias" class="form-control" placeholder="在此处输入栏目别名" required autocomplete="off">
+              <span class="prompt-text">“别名”是在URL中使用的别称，它可以令URL更美观。通常使用小写，只能包含字母，数字和连字符（-）。</span> </div>
+            <div class="form-group">
+              <label for="category-fname">父节点</label>
+              <select id="category-fname" class="form-control" name="fid">
+                <option value="0" selected>无</option>
+                <option value="1">前端技术</option>
+                <option value="2">后端程序</option>
+                <option value="3">管理系统</option>
+                <option value="4">授人以渔</option>
+                <option value="5">程序人生</option>
+              </select>
+              <span class="prompt-text">栏目是有层级关系的，您可以有一个“音乐”分类目录，在这个目录下可以有叫做“流行”和“古典”的子目录。</span> </div>
+            <div class="form-group">
+              <label for="category-keywords">关键字</label>
+              <input type="text" id="category-keywords" name="keywords" class="form-control" placeholder="在此处输入栏目关键字" autocomplete="off">
+              <span class="prompt-text">关键字会出现在网页的keywords属性中。</span> </div>
+            <div class="form-group">
+              <label for="category-describe">描述</label>
+              <textarea class="form-control" id="category-describe" name="describe" rows="4" autocomplete="off"></textarea>
+              <span class="prompt-text">描述会出现在网页的description属性中。</span> </div>
+            <button class="btn btn-primary" type="submit" name="submit">添加新栏目</button>
+          </form>
         </div>
-      </footer>
+        <div class="col-md-7">
+          <h1 class="page-header">管理 <span class="badge">3</span></h1>
+          <div class="table-responsive">
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th><span class="glyphicon glyphicon-paperclip"></span> <span class="visible-lg">ID</span></th>
+                  <th><span class="glyphicon glyphicon-file"></span> <span class="visible-lg">名称</span></th>
+                  <th><span class="glyphicon glyphicon-list-alt"></span> <span class="visible-lg">别名</span></th>
+                  <th><span class="glyphicon glyphicon-pushpin"></span> <span class="visible-lg">总数</span></th>
+                  <th><span class="glyphicon glyphicon-pencil"></span> <span class="visible-lg">操作</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>前端技术</td>
+                  <td>web</td>
+                  <td>125</td>
+                  <td><a href="update-category">修改</a> <a rel="1">删除</a></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>后端程序</td>
+                  <td>program</td>
+                  <td>185</td>
+                  <td><a href="update-category">修改</a> <a rel="2">删除</a></td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>管理系统</td>
+                  <td>cms</td>
+                  <td>223</td>
+                  <td><a href="update-category">修改</a> <a rel="3">删除</a></td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>授人以渔</td>
+                  <td>tutorial</td>
+                  <td>12</td>
+                  <td><a href="update-category">修改</a> <a rel="4">删除</a></td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>程序人生</td>
+                  <td>code</td>
+                  <td>35</td>
+                  <td><a href="update-category">修改</a> <a rel="5">删除</a></td>
+                </tr>
+              </tbody>
+            </table>
+            <span class="prompt-text"><strong>注：</strong>删除一个栏目也会删除栏目下的文章和子栏目,请谨慎删除!</span> </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -236,37 +233,37 @@
         <h4 class="modal-title" >登录记录</h4>
       </div>
       <div class="modal-body">
-          <table class="table" style="margin-bottom:0px;">
-            <thead>
-              <tr>
-                <th>登录IP</th>
-                <th>登录时间</th>
-                <th>状态</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>::1:55570</td>
-                <td>2016-01-08 15:50:28</td>
-                <td>成功</td>
-              </tr>
-              <tr>
-                <td>::1:64377</td>
-                <td>2016-01-08 10:27:44</td>
-                <td>成功</td>
-              </tr>
-              <tr>
-                <td>::1:64027</td>
-                <td>2016-01-08 10:19:25</td>
-                <td>成功</td>
-              </tr>
-              <tr>
-                <td>::1:57081</td>
-                <td>2016-01-06 10:35:12</td>
-                <td>成功</td>
-              </tr>
-            </tbody>
-          </table>
+        <table class="table" style="margin-bottom:0px;">
+          <thead>
+            <tr>
+              <th>登录IP</th>
+              <th>登录时间</th>
+              <th>状态</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>::1:55570</td>
+              <td>2016-01-08 15:50:28</td>
+              <td>成功</td>
+            </tr>
+            <tr>
+              <td>::1:64377</td>
+              <td>2016-01-08 10:27:44</td>
+              <td>成功</td>
+            </tr>
+            <tr>
+              <td>::1:64027</td>
+              <td>2016-01-08 10:19:25</td>
+              <td>成功</td>
+            </tr>
+            <tr>
+              <td>::1:57081</td>
+              <td>2016-01-06 10:35:12</td>
+              <td>成功</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">朕已阅</button>
@@ -312,6 +309,30 @@
     <li class="list-group-item"><span>系统：</span>Windows10 </li>
     <li class="list-group-item"><span>浏览器：</span>Chrome47</li>
   </ul>
-</div>
+</div> 
+<script>
+//是否确认删除
+$(function(){   
+	$("#main table tbody tr td a").click(function(){
+		var name = $(this);
+		var id = name.attr("rel"); //对应id  
+		if (event.srcElement.outerText === "删除") 
+		{
+			if(window.confirm("此操作不可逆，是否确认？"))
+			{
+				$.ajax({
+					type: "POST",
+					url: "/Category/delete",
+					data: "id=" + id,
+					cache: false, //不缓存此页面   
+					success: function (data) {
+						window.location.reload();
+					}
+				});
+			};
+		};
+	});   
+});
+</script>
 </body>
 </html>
