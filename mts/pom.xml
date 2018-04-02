@@ -158,7 +158,11 @@
 			<version>7.0.82</version>
 			<scope>provided</scope>
 		</dependency>
-		
+		<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid</artifactId>
+				<version>${druid.version}</version>
+			</dependency>
 		</dependencies>
 	
 </project>
