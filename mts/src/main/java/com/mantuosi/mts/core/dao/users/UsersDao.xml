@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mantuosi.mts.core.dao.users.UsersDao" >
+  <resultMap id="BaseResultMap" type="com.mantuosi.mts.core.bean.users.Users" >
+    <id column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="uname" property="uname" jdbcType="VARCHAR" />
+    <result column="upassport" property="upassport" jdbcType="VARCHAR" />
+    <result column="uaddr" property="uaddr" jdbcType="VARCHAR" />
+    <result column="urank" property="urank" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      uid, uname, upassport, uaddr, urank
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mantuosi.mts.core.bean.users.UsersQuery" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from users
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    uid,uname,upassport,uaddr,urank
+    from users
+    where uid = #{uid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from users
+    where uid = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mantuosi.mts.core.bean.users.UsersQuery" >
+    delete from users
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mantuosi.mts.core.bean.users.Users" >
+    insert into users (uid, uname, upassport, 
+      uaddr, urank)
+    values (#{uid,jdbcType=VARCHAR}, #{uname,jdbcType=VARCHAR}, #{upassport,jdbcType=VARCHAR}, 
+      #{uaddr,jdbcType=VARCHAR}, #{urank,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mantuosi.mts.core.bean.users.Users" >
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="uname != null" >
+        uname,
+      </if>
+      <if test="upassport != null" >
+        upassport,
+      </if>
+      <if test="uaddr != null" >
+        uaddr,
+      </if>
+      <if test="urank != null" >
+        urank,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null" >
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="upassport != null" >
+        #{upassport,jdbcType=VARCHAR},
+      </if>
+      <if test="uaddr != null" >
+        #{uaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="urank != null" >
+        #{urank,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mantuosi.mts.core.bean.users.UsersQuery" resultType="java.lang.Integer" >
+    select count(*) from users
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update users
+    <set >
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uname != null" >
+        uname = #{record.uname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upassport != null" >
+        upassport = #{record.upassport,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uaddr != null" >
+        uaddr = #{record.uaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.urank != null" >
+        urank = #{record.urank,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update users
+    set uid = #{record.uid,jdbcType=VARCHAR},
+      uname = #{record.uname,jdbcType=VARCHAR},
+      upassport = #{record.upassport,jdbcType=VARCHAR},
+      uaddr = #{record.uaddr,jdbcType=VARCHAR},
+      urank = #{record.urank,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mantuosi.mts.core.bean.users.Users" >
+    update users
+    <set >
+      <if test="uname != null" >
+        uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="upassport != null" >
+        upassport = #{upassport,jdbcType=VARCHAR},
+      </if>
+      <if test="uaddr != null" >
+        uaddr = #{uaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="urank != null" >
+        urank = #{urank,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mantuosi.mts.core.bean.users.Users" >
+    update users
+    set uname = #{uname,jdbcType=VARCHAR},
+      upassport = #{upassport,jdbcType=VARCHAR},
+      uaddr = #{uaddr,jdbcType=VARCHAR},
+      urank = #{urank,jdbcType=VARCHAR}
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
+</mapper>

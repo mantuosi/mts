@@ -23,7 +23,7 @@
                 <li><a title="查看您的登录记录" data-toggle="modal" data-target="#seeUserLoginlog">登录记录</a></li>
               </ul>
             </li>
-            <li><a href="login" onClick="if(!confirm('是否确认退出？'))return false;">退出登录</a></li>
+            <li><a href="/logout" onClick="if(!confirm('是否确认退出？'))return false;">退出登录</a></li>
             <li><a data-toggle="modal" data-target="#WeChat">帮助</a></li>
           </ul>
           <form action="" method="post" class="navbar-form navbar-right" role="search">
@@ -40,19 +40,19 @@
   <div class="row">
     <aside class="col-sm-3 col-md-2 col-lg-2 sidebar">
       <ul class="nav nav-sidebar">
-        <li class="active"><a href="index">报告</a></li>
+        <li class="active"><a href="/admin/index">报告</a></li>
       </ul>
       <ul class="nav nav-sidebar">
-        <li><a href="article">文章</a></li>
-        <li><a href="notice">公告</a></li>
-        <li><a href="comment">评论</a></li>
+        <li><a href="/admin/article">文章</a></li>
+        <li><a href="/admin/notice">公告</a></li>
+        <li><a href="/admin/comment">评论</a></li>
         <li><a data-toggle="tooltip" data-placement="bottom" title="网站暂无留言功能">留言</a></li>
       </ul>
       <ul class="nav nav-sidebar">
-        <li><a href="category">栏目</a></li>
+        <li><a href="/admin/category">栏目</a></li>
         <li><a class="dropdown-toggle" id="otherMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">其他</a>
           <ul class="dropdown-menu" aria-labelledby="otherMenu">
-            <li><a href="flink">友情链接</a></li>
+            <li><a href="/admin/flink">友情链接</a></li>
             <li><a data-toggle="modal" data-target="#areDeveloping">访问记录</a></li>
           </ul>
         </li>
@@ -61,15 +61,15 @@
         <li><a class="dropdown-toggle" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">用户</a>
           <ul class="dropdown-menu" aria-labelledby="userMenu">
             <li><a data-toggle="modal" data-target="#areDeveloping">管理用户组</a></li>
-            <li><a href="manage-user">管理用户</a></li>
+            <li><a href="/admin/manage-user">管理用户</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="loginlog">管理登录日志</a></li>
+            <li><a href="/admin/loginlog">管理登录日志</a></li>
           </ul>
         </li>
         <li><a class="dropdown-toggle" id="settingMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">设置</a>
           <ul class="dropdown-menu" aria-labelledby="settingMenu">
-            <li><a href="setting">基本设置</a></li>
-            <li><a href="readset">阅读设置</a></li>
+            <li><a href="/admin/setting">基本设置</a></li>
+            <li><a href="/admin/readset">阅读设置</a></li>
             <li role="separator" class="divider"></li>
             <li><a data-toggle="modal" data-target="#areDeveloping">安全配置</a></li>
             <li role="separator" class="divider"></li>

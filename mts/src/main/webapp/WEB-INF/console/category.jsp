@@ -7,6 +7,56 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>栏目 - 异清轩博客管理系统</title>
 </head>
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".parent").click(function(){		
+        var id = $(this).attr("rel"); //对应id
+            $.ajax({
+                type: "POST",
+                url: "/admin/scCategory",
+                data: {
+					'id' : id,
+					},
+                cache: false, //不缓存此页面   
+                success: function (data) {
+                	var html="";
+                	for (var i = 0 ; i < data.length ; i++){
+                		var href = "/admin/delScCategory?id=" + data[i].id;
+                		
+                		html+="<tr>"+
+                		"<td>"+ data[i].name +"</td>"+
+                		"<td>"+ data[i].alias +"</td>"+
+                		"<td>"+ data[i].pname +"</td>"+
+                		"<td><a>修改</a>&nbsp;<a href='" + href + "'>删除</a></td>"
+                		+"</tr>"
+                	}
+                	$("#categorySc").html(html);
+                }
+            });
+            $('#seeComment').modal('show');
+	});
+	
+	$(".delParentcategory").click(function(){
+		 var id = $(this).attr("rel");
+		 if(confirm("确认删除吗?")){
+		 $.ajax({
+             type: "POST",
+             url: "/admin/delPcategory",
+             data: {
+					'id' : id,
+					},
+             cache: false, //不缓存此页面   
+             success: function (data) {
+            	 	window.location.href=(data);
+             	}            
+		});
+		}
+	});
+	
+	
+});
+</script>
+
 <body class="user-select">
 <section class="container-fluid">
   <header>
@@ -41,20 +91,20 @@
   <div class="row">
     <aside class="col-sm-3 col-md-2 col-lg-2 sidebar">
       <ul class="nav nav-sidebar">
-        <li><a href="index">报告</a></li>
+        <li><a href="/admin/index">报告</a></li>
       </ul>
       <ul class="nav nav-sidebar">
-        <li><a href="article">文章</a></li>
-        <li><a href="notice">公告</a></li>
-        <li><a href="comment">评论</a></li>
+        <li><a href="/admin/article">文章</a></li>
+        <li><a href="/admin/notice">公告</a></li>
+        <li><a href="/admin/comment">评论</a></li>
         <li><a data-toggle="tooltip" data-placement="top" title="网站暂无留言功能">留言</a></li>
       </ul>
       <ul class="nav nav-sidebar">
-        <li class="active"><a href="category">栏目</a></li>
+        <li class="active"><a href="/admin/category">栏目</a></li>
         <li><a class="dropdown-toggle" id="otherMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">其他</a>
           <ul class="dropdown-menu" aria-labelledby="otherMenu">
-            <li><a href="flink">友情链接</a></li>
-            <li><a href="loginlog">访问记录</a></li>
+            <li><a href="/admin/flink">友情链接</a></li>
+            <li><a href="/admin/loginlog">访问记录</a></li>
           </ul>
         </li>
       </ul>
@@ -62,15 +112,15 @@
         <li><a class="dropdown-toggle" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">用户</a>
           <ul class="dropdown-menu" aria-labelledby="userMenu">
             <li><a href="#">管理用户组</a></li>
-            <li><a href="manage-user">管理用户</a></li>
+            <li><a href="/admin/manage-user">管理用户</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="loginlog">管理登录日志</a></li>
+            <li><a href="/admin/loginlog">管理登录日志</a></li>
           </ul>
         </li>
         <li><a class="dropdown-toggle" id="settingMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">设置</a>
           <ul class="dropdown-menu" aria-labelledby="settingMenu">
-            <li><a href="setting">基本设置</a></li>
-            <li><a href="readset">用户设置</a></li>
+            <li><a href="/admin/setting">基本设置</a></li>
+            <li><a href="/admin/readset">用户设置</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="#">安全配置</a></li>
             <li role="separator" class="divider"></li>
@@ -83,7 +133,7 @@
       <div class="row">
         <div class="col-md-5">
           <h1 class="page-header">添加</h1>
-          <form action="/Category/add" method="post" autocomplete="off">
+          <form action="/addCategory" method="post" autocomplete="off">
             <div class="form-group">
               <label for="category-name">栏目名称</label>
               <input type="text" id="category-name" name="name" class="form-control" placeholder="在此处输入栏目名称" required autocomplete="off">
@@ -91,25 +141,19 @@
             <div class="form-group">
               <label for="category-alias">栏目别名</label>
               <input type="text" id="category-alias" name="alias" class="form-control" placeholder="在此处输入栏目别名" required autocomplete="off">
-              <span class="prompt-text">“别名”是在URL中使用的别称，它可以令URL更美观。通常使用小写，只能包含字母，数字和连字符（-）。</span> </div>
+              <span class="prompt-text">“别名”是在URL中使用的别称。</span> </div>
             <div class="form-group">
               <label for="category-fname">父节点</label>
-              <select id="category-fname" class="form-control" name="fid">
+              <select id="category-fname" class="form-control" name="pid">
                 <option value="0" selected>无</option>
-                <option value="1">前端技术</option>
-                <option value="2">后端程序</option>
-                <option value="3">管理系统</option>
-                <option value="4">授人以渔</option>
-                <option value="5">程序人生</option>
+                <c:forEach var="category" items="${pagination.list }" >
+                <option value="${category.id }">${category.name }</option>
+                </c:forEach>
               </select>
               <span class="prompt-text">栏目是有层级关系的，您可以有一个“音乐”分类目录，在这个目录下可以有叫做“流行”和“古典”的子目录。</span> </div>
             <div class="form-group">
-              <label for="category-keywords">关键字</label>
-              <input type="text" id="category-keywords" name="keywords" class="form-control" placeholder="在此处输入栏目关键字" autocomplete="off">
-              <span class="prompt-text">关键字会出现在网页的keywords属性中。</span> </div>
-            <div class="form-group">
               <label for="category-describe">描述</label>
-              <textarea class="form-control" id="category-describe" name="describe" rows="4" autocomplete="off"></textarea>
+              <textarea class="form-control" id="category-describe" name="description" rows="4" autocomplete="off"></textarea>
               <span class="prompt-text">描述会出现在网页的description属性中。</span> </div>
             <button class="btn btn-primary" type="submit" name="submit">添加新栏目</button>
           </form>
@@ -120,51 +164,60 @@
             <table class="table table-striped table-hover">
               <thead>
                 <tr>
-                  <th><span class="glyphicon glyphicon-paperclip"></span> <span class="visible-lg">ID</span></th>
+                  <th><span class="glyphicon glyphicon-paperclip"></span> <span class="visible-lg">序号</span></th>
                   <th><span class="glyphicon glyphicon-file"></span> <span class="visible-lg">名称</span></th>
                   <th><span class="glyphicon glyphicon-list-alt"></span> <span class="visible-lg">别名</span></th>
-                  <th><span class="glyphicon glyphicon-pushpin"></span> <span class="visible-lg">总数</span></th>
                   <th><span class="glyphicon glyphicon-pencil"></span> <span class="visible-lg">操作</span></th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>前端技术</td>
-                  <td>web</td>
-                  <td>125</td>
-                  <td><a href="update-category">修改</a> <a rel="1">删除</a></td>
+              <c:set value="0" var="count"></c:set>
+              <c:forEach var="category" items="${pagination.list }" varStatus="vs">
+              	<tr>
+                  <td>${vs.count}</td>
+                  <td>${category.name }</td>
+                  <td>${category.alias }</td>
+                  <td>
+                  	<a href="/admin/update-category">修改</a> 
+                  	<a class="parent" rel="${category.id }">子栏目</a>
+                  	<a class="delParentcategory" rel="${category.id }">删除</a>
+                  	</td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>后端程序</td>
-                  <td>program</td>
-                  <td>185</td>
-                  <td><a href="update-category">修改</a> <a rel="2">删除</a></td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>管理系统</td>
-                  <td>cms</td>
-                  <td>223</td>
-                  <td><a href="update-category">修改</a> <a rel="3">删除</a></td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>授人以渔</td>
-                  <td>tutorial</td>
-                  <td>12</td>
-                  <td><a href="update-category">修改</a> <a rel="4">删除</a></td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>程序人生</td>
-                  <td>code</td>
-                  <td>35</td>
-                  <td><a href="update-category">修改</a> <a rel="5">删除</a></td>
-                </tr>
+              </c:forEach>
+                               
+                
               </tbody>
             </table>
+            
+     <div class="modal fade" id="seeComment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  	  	<div class="modal-dialog" role="document">
+      	<div class="modal-content">
+        <div class="modal-header">
+          	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          	<h4 class="modal-title" >查看子节点</h4>
+        </div>
+        <div class="modal-body">
+          	<table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th><span class="glyphicon glyphicon-file"></span> <span class="visible-lg">名称</span></th>
+                  <th><span class="glyphicon glyphicon-list-alt"></span> <span class="visible-lg">别名</span></th>
+                  <th><span class="glyphicon glyphicon-link"></span> <span class="visible-lg">父节点</span></th>
+                  <th><span class="glyphicon glyphicon-pencil"></span> <span class="visible-lg">操作</span></th>
+                </tr>
+              </thead>
+              <tbody id="categorySc">
+              	 
+              </tbody>
+            </table>	
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">朕已阅</button>
+        </div>
+      </div>
+  </div>
+</div>
+
             <span class="prompt-text"><strong>注：</strong>删除一个栏目也会删除栏目下的文章和子栏目,请谨慎删除!</span> </div>
         </div>
       </div>
@@ -187,27 +240,27 @@
             </thead>
             <tbody>
               <tr>
-                <td wdith="20%">姓名:</td>
+                <td width="20%">姓名:</td>
                 <td width="80%"><input type="text" value="王雨" class="form-control" name="truename" maxlength="10" autocomplete="off" /></td>
               </tr>
               <tr>
-                <td wdith="20%">用户名:</td>
+                <td width="20%">用户名:</td>
                 <td width="80%"><input type="text" value="admin" class="form-control" name="username" maxlength="10" autocomplete="off" /></td>
               </tr>
               <tr>
-                <td wdith="20%">电话:</td>
+                <td width="20%">电话:</td>
                 <td width="80%"><input type="text" value="18538078281" class="form-control" name="usertel" maxlength="13" autocomplete="off" /></td>
               </tr>
               <tr>
-                <td wdith="20%">旧密码:</td>
+                <td width="20%">旧密码:</td>
                 <td width="80%"><input type="password" class="form-control" name="old_password" maxlength="18" autocomplete="off" /></td>
               </tr>
               <tr>
-                <td wdith="20%">新密码:</td>
+                <td width="20%">新密码:</td>
                 <td width="80%"><input type="password" class="form-control" name="password" maxlength="18" autocomplete="off" /></td>
               </tr>
               <tr>
-                <td wdith="20%">确认密码:</td>
+                <td width="20%">确认密码:</td>
                 <td width="80%"><input type="password" class="form-control" name="new_password" maxlength="18" autocomplete="off" /></td>
               </tr>
             </tbody>
@@ -279,7 +332,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="WeChatModalLabel" style="cursor:default;">微信扫一扫</h4>
       </div>
-      <div class="modal-body" style="text-align:center"> <img src="images/weixin.jpg" alt="" style="cursor:pointer"/> </div>
+      <div class="modal-body" style="text-align:center"> <img src="/res/images/weixin.jpg" alt="" style="cursor:pointer"/> </div>
     </div>
   </div>
 </div>
@@ -291,7 +344,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="areDevelopingModalLabel" style="cursor:default;">该功能正在日以继夜的开发中…</h4>
       </div>
-      <div class="modal-body"> <img src="images/baoman/baoman_01.gif" alt="深思熟虑" />
+      <div class="modal-body"> <img src="/res/images/baoman/baoman_01.gif" alt="深思熟虑" />
         <p style="padding:15px 15px 15px 100px; position:absolute; top:15px; cursor:default;">很抱歉，程序猿正在日以继夜的开发此功能，本程序将会在以后的版本中持续完善！</p>
       </div>
       <div class="modal-footer">
@@ -310,29 +363,6 @@
     <li class="list-group-item"><span>浏览器：</span>Chrome47</li>
   </ul>
 </div> 
-<script>
-//是否确认删除
-$(function(){   
-	$("#main table tbody tr td a").click(function(){
-		var name = $(this);
-		var id = name.attr("rel"); //对应id  
-		if (event.srcElement.outerText === "删除") 
-		{
-			if(window.confirm("此操作不可逆，是否确认？"))
-			{
-				$.ajax({
-					type: "POST",
-					url: "/Category/delete",
-					data: "id=" + id,
-					cache: false, //不缓存此页面   
-					success: function (data) {
-						window.location.reload();
-					}
-				});
-			};
-		};
-	});   
-});
-</script>
 </body>
+
 </html>

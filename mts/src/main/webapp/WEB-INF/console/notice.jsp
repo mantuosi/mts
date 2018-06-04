@@ -129,6 +129,10 @@
             <ul class="pagination pagenav">
               <li class="disabled"><a aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a> </li>
               <li class="active"><a>1</a></li>
+              <li><a>1</a></li>
+              <li	><a>1</a></li>
+              <li><a>1</a></li>
+              <li><a>1</a></li>
               <li class="disabled"><a aria-label="Next"> <span aria-hidden="true">&raquo;</span> </a> </li>
             </ul>
           </nav>

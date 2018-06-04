@@ -135,16 +135,40 @@
             <version>5.1.30</version>  
         </dependency>  
         <!-- json数据 -->  
-        <dependency>  
-            <groupId>org.codehaus.jackson</groupId>  
-            <artifactId>jackson-core-asl</artifactId>  
-            <version>1.9.13</version>  
-        </dependency>  
-        <dependency>  
-            <groupId>org.codehaus.jackson</groupId>  
-            <artifactId>jackson-mapper-asl</artifactId>  
-            <version>1.9.13</version>  
-        </dependency>  
+        
+        <dependency>
+             <groupId>com.fasterxml.jackson.core</groupId>
+             <artifactId>jackson-core</artifactId>
+             <version>2.7.5</version>
+       </dependency>
+       <dependency>
+             <groupId>com.fasterxml.jackson.core</groupId>
+             <artifactId>jackson-annotations</artifactId>
+             <version>2.7.5</version>
+       </dependency>
+       <dependency>
+             <groupId>com.fasterxml.jackson.core</groupId>
+             <artifactId>jackson-databind</artifactId>
+             <version>2.7.5</version>
+       </dependency>
+
+       <dependency>
+             <groupId>org.codehaus.jackson</groupId>
+             <artifactId>jackson-mapper-asl</artifactId>
+             <version>1.9.4</version>
+       </dependency>
+       
+       <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>1.9.4</version>
+       </dependency>
+        
+
+
+
+
+
 
         <!-- JSTL标签类 -->  
         <dependency>  
@@ -163,6 +187,27 @@
 				<artifactId>druid</artifactId>
 				<version>${druid.version}</version>
 			</dependency>
-		</dependencies>
+		<dependency>
+				<groupId>redis.clients</groupId>
+				<artifactId>jedis</artifactId>
+				<version>2.7.3</version>
+		</dependency>
+		<!--page -->
+		<dependency>
+			<groupId>com.babasport</groupId>
+			<artifactId>page</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>4.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.4.1</version>
+		</dependency>	
+	</dependencies>
 	
 </project>

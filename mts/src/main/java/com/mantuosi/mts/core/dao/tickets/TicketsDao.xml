@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mantuosi.mts.core.dao.tickets.TicketsDao" >
+  <resultMap id="BaseResultMap" type="com.mantuosi.mts.core.bean.tickets.Tickets" >
+    <id column="Tid" property="tid" jdbcType="VARCHAR" />
+    <result column="departure_add" property="departureAdd" jdbcType="VARCHAR" />
+    <result column="destination_add" property="destinationAdd" jdbcType="VARCHAR" />
+    <result column="departure_time" property="departureTime" jdbcType="VARCHAR" />
+    <result column="arrival_time" property="arrivalTime" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="REAL" />
+    <result column="Uid" property="uid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      Tid, departure_add, destination_add, departure_time, arrival_time, price, Uid
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mantuosi.mts.core.bean.tickets.TicketsQuery" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tickets
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    Tid,departure_add,destination_add,departure_time,arrival_time,price,Uid
+    from tickets
+    where Tid = #{tid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tickets
+    where Tid = #{tid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mantuosi.mts.core.bean.tickets.TicketsQuery" >
+    delete from tickets
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mantuosi.mts.core.bean.tickets.Tickets" >
+    insert into tickets (Tid, departure_add, destination_add, 
+      departure_time, arrival_time, price, 
+      Uid)
+    values (#{tid,jdbcType=VARCHAR}, #{departureAdd,jdbcType=VARCHAR}, #{destinationAdd,jdbcType=VARCHAR}, 
+      #{departureTime,jdbcType=VARCHAR}, #{arrivalTime,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, 
+      #{uid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mantuosi.mts.core.bean.tickets.Tickets" >
+    insert into tickets
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tid != null" >
+        Tid,
+      </if>
+      <if test="departureAdd != null" >
+        departure_add,
+      </if>
+      <if test="destinationAdd != null" >
+        destination_add,
+      </if>
+      <if test="departureTime != null" >
+        departure_time,
+      </if>
+      <if test="arrivalTime != null" >
+        arrival_time,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="uid != null" >
+        Uid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tid != null" >
+        #{tid,jdbcType=VARCHAR},
+      </if>
+      <if test="departureAdd != null" >
+        #{departureAdd,jdbcType=VARCHAR},
+      </if>
+      <if test="destinationAdd != null" >
+        #{destinationAdd,jdbcType=VARCHAR},
+      </if>
+      <if test="departureTime != null" >
+        #{departureTime,jdbcType=VARCHAR},
+      </if>
+      <if test="arrivalTime != null" >
+        #{arrivalTime,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mantuosi.mts.core.bean.tickets.TicketsQuery" resultType="java.lang.Integer" >
+    select count(*) from tickets
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tickets
+    <set >
+      <if test="record.tid != null" >
+        Tid = #{record.tid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departureAdd != null" >
+        departure_add = #{record.departureAdd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.destinationAdd != null" >
+        destination_add = #{record.destinationAdd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departureTime != null" >
+        departure_time = #{record.departureTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrivalTime != null" >
+        arrival_time = #{record.arrivalTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=REAL},
+      </if>
+      <if test="record.uid != null" >
+        Uid = #{record.uid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tickets
+    set Tid = #{record.tid,jdbcType=VARCHAR},
+      departure_add = #{record.departureAdd,jdbcType=VARCHAR},
+      destination_add = #{record.destinationAdd,jdbcType=VARCHAR},
+      departure_time = #{record.departureTime,jdbcType=VARCHAR},
+      arrival_time = #{record.arrivalTime,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=REAL},
+      Uid = #{record.uid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mantuosi.mts.core.bean.tickets.Tickets" >
+    update tickets
+    <set >
+      <if test="departureAdd != null" >
+        departure_add = #{departureAdd,jdbcType=VARCHAR},
+      </if>
+      <if test="destinationAdd != null" >
+        destination_add = #{destinationAdd,jdbcType=VARCHAR},
+      </if>
+      <if test="departureTime != null" >
+        departure_time = #{departureTime,jdbcType=VARCHAR},
+      </if>
+      <if test="arrivalTime != null" >
+        arrival_time = #{arrivalTime,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=REAL},
+      </if>
+      <if test="uid != null" >
+        Uid = #{uid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Tid = #{tid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mantuosi.mts.core.bean.tickets.Tickets" >
+    update tickets
+    set departure_add = #{departureAdd,jdbcType=VARCHAR},
+      destination_add = #{destinationAdd,jdbcType=VARCHAR},
+      departure_time = #{departureTime,jdbcType=VARCHAR},
+      arrival_time = #{arrivalTime,jdbcType=VARCHAR},
+      price = #{price,jdbcType=REAL},
+      Uid = #{uid,jdbcType=VARCHAR}
+    where Tid = #{tid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -339,23 +339,9 @@ $(function () {
         var name = $(this);
         var id = name.attr("rel"); //对应id   
         if (name.attr("name") === "see") {
-            $.ajax({
-                type: "POST",
-                url: "/Comment/see",
-                data: "id=" + id,
-                cache: false, //不缓存此页面   
-                success: function (data) {
-                    var data = JSON.parse(data);
-                    $('.see-comment-id').html(data.id);
-                    $('.see-comment-page').html(data.page);
-                    $('.see-comment-content').html(data.content);
-                    $('.see-comment-ip').html(data.ip);
-                    $('.see-comment-address').html(data.address);
-                    $('.see-comment-system').html(data.system);
-                    $('.see-comment-browser').html(data.browser);
-                    $('#seeComment').modal('show');
-                }
-            });
+           
+                   
+                    $('#seeComment').modal('show');          
         } else if (name.attr("name") === "delete") {
             if (window.confirm("此操作不可逆，是否确认？")) {
                 $.ajax({
