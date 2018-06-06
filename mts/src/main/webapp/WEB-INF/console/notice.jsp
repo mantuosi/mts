@@ -7,6 +7,84 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>公告 - 异清轩博客管理系统</title>
 </head>
+<script>
+$(document).ready(function(){
+	var pageNo=getQueryVariable("pageNo");
+	if(!pageNo){
+		$("li#"+1).addClass("active");
+	}
+	$("li#"+pageNo).addClass("active");
+	var mts;
+	$(".publishTime").each(function(){
+		mts=$(this).text();
+		$(this).text(mts.substring(0,16));
+	});
+	
+	
+$(function(){   
+	$(".delNotice").click(function(){
+		var id = $(this).attr("rel");   
+			if(confirm("确认删除吗?")){
+				$.ajax({
+					type: "POST",
+					url: "/admin/deleteNotice",
+					data: {
+						'id' : id,
+						},
+					async:true,
+					cache: false, 
+					success: function (data) {
+						window.location.href=(data);
+					}
+				});
+			};
+	});   
+});
+
+$(".viewNotice").click(function(){
+	var id=$(this).attr("rel");
+	var url="/admin/viewNotice?id="+id;
+	window.location.href=(url);
+});
+
+$("#deleteCheckedArticles").click(function(){
+	var checkedNum = $("#ids:checked").length;  
+    if(checkedNum==0){  
+        alert("请至少选择一项!");
+        return false;
+    }  
+    if(confirm("确定删除所选项目?")){ 
+    	var checkedList = new Array();  
+        $("#ids:checked").each(function(){  
+            checkedList.push($(this).val());  
+        });
+        $.ajax({
+			type: "POST",
+			url: "/admin/deleteNotices",			
+			data: {
+				'ids' : checkedList.toString(),
+			},
+			async:true,
+			cache: false,    
+			success: function (data) {
+				window.location.href=(data);
+			}
+		});   
+    }
+});
+function getQueryVariable(variable){
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){
+            	   return pair[1];
+            	}
+       }
+       return(false);
+}
+});
+</script>
 <body class="user-select">
 <section class="container-fluid">
   <header>
@@ -47,7 +125,7 @@
         <li><a href="article">文章</a></li>
         <li class="active"><a href="notice">公告</a></li>
         <li><a href="comment">评论</a></li>
-        <li><a data-toggle="tooltip" data-placement="top" title="网站暂无留言功能">留言</a></li>
+        <li class="disabled"><a data-toggle="tooltip" data-placement="top" title="网站暂无留言功能">留言</a></li>
       </ul>
       <ul class="nav nav-sidebar">
         <li><a href="category">栏目</a></li>
@@ -80,61 +158,60 @@
       </ul>
     </aside>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-lg-10 col-md-offset-2 main" id="main">
-      <form action="/Article/checkAll" method="post" >
+      <form method="post" >
         <h1 class="page-header">操作</h1>
         <ol class="breadcrumb">
-          <li><a href="add-notice">增加公告</a></li>
+          <li><a href="/admin/add-notice">新增公告</a></li>
         </ol>
-        <h1 class="page-header">管理 <span class="badge">3</span></h1>
+        <h1 class="page-header">管理 <span class="badge">${noticeNum }</span></h1>
         <div class="table-responsive">
+        
           <table class="table table-striped table-hover">
             <thead>
               <tr>
                 <th><span class="glyphicon glyphicon-th-large"></span> <span class="visible-lg">选择</span></th>
                 <th><span class="glyphicon glyphicon-file"></span> <span class="visible-lg">标题</span></th>
                 <th><span class="glyphicon glyphicon-time"></span> <span class="visible-lg">日期</span></th>
+                <th><span class="glyphicon glyphicon-time"></span> <span class="visible-lg">公告状态</span></th>
                 <th><span class="glyphicon glyphicon-pencil"></span> <span class="visible-lg">操作</span></th>
               </tr>
             </thead>
             <tbody>
+           	<c:forEach var="notice" items="${pagination.list }">
               <tr>
-                <td><input type="checkbox" class="input-control" name="checkbox[]" value="" /></td>
-                <td class="article-title">这是测试的公告标题这是测试的公告标题这是测试的公告标题这是测试的公告标题</td>
-                <td>2015-12-03</td>
-                <td><a href="">修改</a> <a rel="6">删除</a></td>
+                <td><input type="checkbox" id="ids" class="input-control" name="checkbox[]" value="${notice.id }"/></td>
+                <td class="article-title">${notice.title }</td>
+                <td class="publishTime">${notice.publishtime }</td>
+                <c:if test="${notice.state eq 0 }">
+                <td>暂存</td>
+                </c:if>
+                <c:if test="${notice.state ne 0 }">
+                <td>已发布</td>
+                </c:if>
+                <td>
+                	<a class="viewNotice" rel="${notice.id }">查看/修改</a> 
+                	<a class="delNotice" rel="${notice.id }">删除</a></td>
               </tr>
-              <tr>
-                <td><input type="checkbox" class="input-control" name="checkbox[]" value="" /></td>
-                <td class="article-title">这是测试的公告标题这是测试的公告标题这是测试的公告标题这是测试的公告标题</td>
-                <td>2015-12-03</td>
-                <td><a href="">修改</a> <a rel="6">删除</a></td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" class="input-control" name="checkbox[]" value="" /></td>
-                <td class="article-title">这是测试的公告标题这是测试的公告标题这是测试的公告标题这是测试的公告标题</td>
-                <td>2015-12-03</td>
-                <td><a href="">修改</a> <a rel="6">删除</a></td>
-              </tr>
+              </c:forEach>
             </tbody>
           </table>
         </div>
-        <footer class="message_footer">
+        
+      <footer class="message_footer">
           <nav>
             <div class="btn-toolbar operation" role="toolbar">
               <div class="btn-group" role="group"> <a class="btn btn-default" onClick="select()">全选</a> <a class="btn btn-default" onClick="reverse()">反选</a> <a class="btn btn-default" onClick="noselect()">不选</a> </div>
               <div class="btn-group" role="group">
-                <button type="submit" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="删除全部选中" name="checkbox_delete">删除</button>
+                <button id="deleteCheckedArticles" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" name="checkbox_delete">删除</button>
               </div>
             </div>
-            <ul class="pagination pagenav">
-              <li class="disabled"><a aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a> </li>
-              <li class="active"><a>1</a></li>
-              <li><a>1</a></li>
-              <li	><a>1</a></li>
-              <li><a>1</a></li>
-              <li><a>1</a></li>
-              <li class="disabled"><a aria-label="Next"> <span aria-hidden="true">&raquo;</span> </a> </li>
-            </ul>
+            <ul class="pagination pagenav">          	
+              	<li><a href="/admin/notice?pageNo=1">&laquo;</a></li>     
+              	<c:forEach items="${totalPage }" var="page">
+              		<li id="${page }" ><a href="/admin/notice?pageNo=${page }" style="transition: all 0s ease-in-out;">${page }</a></li>
+            	</c:forEach>           	
+              	<li><a href="/admin/notice?pageNo=${lastPage }">&raquo;</a></li>             	
+            </ul>    
           </nav>
         </footer>
       </form>
@@ -249,7 +326,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="WeChatModalLabel" style="cursor:default;">微信扫一扫</h4>
       </div>
-      <div class="modal-body" style="text-align:center"> <img src="images/weixin.jpg" alt="" style="cursor:pointer"/> </div>
+      <div class="modal-body" style="text-align:center"> <img src="/res/images/weixin.jpg" alt="" style="cursor:pointer"/> </div>
     </div>
   </div>
 </div>
@@ -261,7 +338,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="areDevelopingModalLabel" style="cursor:default;">该功能正在日以继夜的开发中…</h4>
       </div>
-      <div class="modal-body"> <img src="images/baoman/baoman_01.gif" alt="深思熟虑" />
+      <div class="modal-body"> <img src="/res/images/baoman/baoman_01.gif" alt="深思熟虑" />
         <p style="padding:15px 15px 15px 100px; position:absolute; top:15px; cursor:default;">很抱歉，程序猿正在日以继夜的开发此功能，本程序将会在以后的版本中持续完善！</p>
       </div>
       <div class="modal-footer">
@@ -280,29 +357,7 @@
     <li class="list-group-item"><span>浏览器：</span>Chrome47</li>
   </ul>
 </div> 
-<script>
-//是否确认删除
-$(function(){   
-	$("#main table tbody tr td a").click(function(){
-		var name = $(this);
-		var id = name.attr("rel"); //对应id  
-		if (event.srcElement.outerText == "删除") 
-		{
-			if(window.confirm("此操作不可逆，是否确认？"))
-			{
-				$.ajax({
-					type: "POST",
-					url: "/Article/delete",
-					data: "id=" + id,
-					cache: false, //不缓存此页面   
-					success: function (data) {
-						window.location.reload();
-					}
-				});
-			};
-		};
-	});   
-});
-</script>
+<script src="/res/js/bootstrap.min.js"></script> 
+<script src="/res/js/admin-scripts.js"></script>
 </body>
 </html>

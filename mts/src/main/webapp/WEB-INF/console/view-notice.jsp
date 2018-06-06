@@ -5,59 +5,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>栏目 - 异清轩博客管理系统</title>
-</head>
-
+<title>写公告 - 异清轩博客管理系统</title>
 <script type="text/javascript">
 $(document).ready(function(){
-	$(".parent").click(function(){		
-        var id = $(this).attr("rel"); //对应id
-            $.ajax({
-                type: "POST",
-                url: "/admin/scCategory",
-                data: {
-					'id' : id,
-					},
-                cache: false, //不缓存此页面   
-                success: function (data) {
-                	var html="";
-                	for (var i = 0 ; i < data.length ; i++){
-                		var href = "/admin/delScCategory?id=" + data[i].id;
-                		
-                		html+="<tr>"+
-                		"<td>"+ data[i].name +"</td>"+
-                		"<td>"+ data[i].alias +"</td>"+
-                		"<td>"+ data[i].pname +"</td>"+
-                		"<td><a>修改</a>&nbsp;<a href='" + href + "'>删除</a></td>"
-                		+"</tr>"
-                	}
-                	$("#categorySc").html(html);
-                }
-            });
-            $('#seeComment').modal('show');
+	$("#return").click(function(){
+		window.location.href=("/admin/notice");
 	});
-	
-	$(".delParentcategory").click(function(){
-		 var id = $(this).attr("rel");
-		 if(confirm("确认删除吗?")){
-		 $.ajax({
-             type: "POST",
-             url: "/admin/delPcategory",
-             data: {
-					'id' : id,
-					},
-             cache: false, //不缓存此页面   
-             success: function (data) {
-            	 	window.location.href=(data);
-             	}            
-		});
-		}
-	});
-	
-	
 });
 </script>
-
+</head>
 <body class="user-select">
 <section class="container-fluid">
   <header>
@@ -92,20 +48,20 @@ $(document).ready(function(){
   <div class="row">
     <aside class="col-sm-3 col-md-2 col-lg-2 sidebar">
       <ul class="nav nav-sidebar">
-        <li><a href="/admin/index">报告</a></li>
+        <li><a href="index">报告</a></li>
       </ul>
       <ul class="nav nav-sidebar">
-        <li><a href="/admin/article">文章</a></li>
-        <li><a href="/admin/notice">公告</a></li>
-        <li><a href="/admin/comment">评论</a></li>
+        <li><a href="article">文章</a></li>
+        <li class="active"><a href="notice">公告</a></li>
+        <li><a href="comment">评论</a></li>
         <li><a data-toggle="tooltip" data-placement="top" title="网站暂无留言功能">留言</a></li>
       </ul>
       <ul class="nav nav-sidebar">
-        <li class="active"><a href="/admin/category">栏目</a></li>
+        <li><a href="category">栏目</a></li>
         <li><a class="dropdown-toggle" id="otherMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">其他</a>
           <ul class="dropdown-menu" aria-labelledby="otherMenu">
-            <li><a href="/admin/flink">友情链接</a></li>
-            <li><a href="/admin/loginlog">访问记录</a></li>
+            <li><a href="flink">友情链接</a></li>
+            <li><a href="loginlog">访问记录</a></li>
           </ul>
         </li>
       </ul>
@@ -113,15 +69,15 @@ $(document).ready(function(){
         <li><a class="dropdown-toggle" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">用户</a>
           <ul class="dropdown-menu" aria-labelledby="userMenu">
             <li><a href="#">管理用户组</a></li>
-            <li><a href="/admin/manage-user">管理用户</a></li>
+            <li><a href="manage-user">管理用户</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="/admin/loginlog">管理登录日志</a></li>
+            <li><a href="loginlog">管理登录日志</a></li>
           </ul>
         </li>
         <li><a class="dropdown-toggle" id="settingMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">设置</a>
           <ul class="dropdown-menu" aria-labelledby="settingMenu">
-            <li><a href="/admin/setting">基本设置</a></li>
-            <li><a href="/admin/readset">用户设置</a></li>
+            <li><a href="setting">基本设置</a></li>
+            <li><a href="readset">用户设置</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="#">安全配置</a></li>
             <li role="separator" class="divider"></li>
@@ -131,96 +87,55 @@ $(document).ready(function(){
       </ul>
     </aside>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-lg-10 col-md-offset-2 main" id="main">
-      <div class="row">
-        <div class="col-md-5">
-          <h1 class="page-header">添加</h1>
-          <form action="/addCategory" method="post" autocomplete="off">
+    	<div class="row">
+        <form action="/admin/addNotice" method="post" class="add-article-form">
+          	<div class="col-md-9">
+            <h1 class="page-header">查看/修改公告</h1>
             <div class="form-group">
-              <label for="category-name">栏目名称</label>
-              <input type="text" id="category-name" name="name" class="form-control" placeholder="在此处输入栏目名称" required autocomplete="off">
-              <span class="prompt-text">这将是它在站点上显示的名字。</span> </div>
+              <label for="article-title" class="sr-only">标题</label>
+              <input type="text" id="article-title" name="title" value="${notice.title }" class="form-control" placeholder="在此处输入标题" required autofocus autocomplete="off">
+            </div>
+                    
             <div class="form-group">
-              <label for="category-alias">栏目别名</label>
-              <input type="text" id="category-alias" name="alias" class="form-control" placeholder="在此处输入栏目别名" required autocomplete="off">
-              <span class="prompt-text">“别名”是在URL中使用的别称。</span> </div>
-            <div class="form-group">
-              <label for="category-fname">父节点</label>
-              <select id="category-fname" class="form-control" name="pid">
-                <option value="0" selected>无</option>
-                <c:forEach var="category" items="${pagination.list }" >
-                <option value="${category.id }">${category.name }</option>
-                </c:forEach>
-              </select>
-              <span class="prompt-text">栏目是有层级关系的，您可以有一个“音乐”分类目录，在这个目录下可以有叫做“流行”和“古典”的子目录。</span> </div>
-            <div class="form-group">
-              <label for="category-describe">描述</label>
-              <textarea class="form-control" id="category-describe" name="description" rows="4" autocomplete="off"></textarea>
-              <span class="prompt-text">描述会出现在网页的description属性中。</span> </div>
-            <button class="btn btn-primary" type="submit" name="submit">添加新栏目</button>
-          </form>
-        </div>
-        <div class="col-md-7">
-          <h1 class="page-header">管理 <span class="badge">3</span></h1>
-          <div class="table-responsive">
-            <table class="table table-striped table-hover">
-              <thead>
-                <tr>
-                  <th><span class="glyphicon glyphicon-paperclip"></span> <span class="visible-lg">序号</span></th>
-                  <th><span class="glyphicon glyphicon-file"></span> <span class="visible-lg">名称</span></th>
-                  <th><span class="glyphicon glyphicon-list-alt"></span> <span class="visible-lg">别名</span></th>
-                  <th><span class="glyphicon glyphicon-pencil"></span> <span class="visible-lg">操作</span></th>
-                </tr>
-              </thead>
-              <tbody>
-              <c:set value="0" var="count"></c:set>
-              <c:forEach var="category" items="${pagination.list }" varStatus="vs">
-              	<tr>
-                  <td>${vs.count}</td>
-                  <td>${category.name }</td>
-                  <td>${category.alias }</td>
-                  <td>
-                  	<a href="/admin/update-category">修改</a> 
-                  	<a class="parent" rel="${category.id }">子栏目</a>
-                  	<a class="delParentcategory" rel="${category.id }">删除</a>
-                  	</td>
-                </tr>
-              </c:forEach>
-                               
-                
-              </tbody>
-            </table>
+              <label for="article-content" class="sr-only">内容</label>
+              <script id="article-content" name="text" type="text/plain"></script>
+            </div>
             
-     <div class="modal fade" id="seeComment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  	  	<div class="modal-dialog" role="document">
-      	<div class="modal-content">
-        <div class="modal-header">
-          	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          	<h4 class="modal-title" >查看子节点</h4>
-        </div>
-        <div class="modal-body">
-          	<table class="table table-striped table-hover">
-              <thead>
-                <tr>
-                  <th><span class="glyphicon glyphicon-file"></span> <span class="visible-lg">名称</span></th>
-                  <th><span class="glyphicon glyphicon-list-alt"></span> <span class="visible-lg">别名</span></th>
-                  <th><span class="glyphicon glyphicon-link"></span> <span class="visible-lg">父节点</span></th>
-                  <th><span class="glyphicon glyphicon-pencil"></span> <span class="visible-lg">操作</span></th>
-                </tr>
-              </thead>
-              <tbody id="categorySc">
-              	 
-              </tbody>
-            </table>	
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">朕已阅</button>
-        </div>
-      </div>
-  </div>
-</div>
-
-            <span class="prompt-text"><strong>注：</strong>删除一个栏目也会删除栏目下的文章和子栏目,请谨慎删除!</span> </div>
-        </div>
+            <div class="add-article-box">
+              <h2 class="add-article-box-title"><span>关键字</span></h2>
+              <div class="add-article-box-content">
+              	<input type="text" class="form-control" placeholder="请输入关键字" name="keyword" value="${notice.keyword }" required autofocus autocomplete="off">
+                <span class="prompt-text">多个标签请用英文逗号,隔开。</span>
+              </div>
+            </div>
+         
+          </div>
+          <div class="col-md-3">
+            <h1 class="page-header">操作</h1>
+            <div class="add-article-box">
+              <h2 class="add-article-box-title"><span>修改公告</span></h2>
+              <div class="add-article-box-content">
+               	
+               	<c:if test="${notice.state eq 1 }">
+               		 <p><label>状态：</label>
+               			<input type="radio" name="state" value="1" checked/>已发布 
+                		<input type="radio" name="state" value="0" />未发布
+                		</p>
+               	</c:if>
+               	<c:if test="${notice.state ne 1 }">
+               		 	<p><label>状态：</label>
+               			<input type="radio" name="state" value="1" />已发布 
+                		<input type="radio" name="state" value="0" checked/>未发布</p>
+               	</c:if>
+              
+              </div>
+              <div class="add-article-box-footer">
+                <button id="return" class="btn btn-primary" type="button" name="back">取消</button>
+                <button class="btn btn-primary" type="submit" name="submit" style="margin-right: 10px;">确认修改</button>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -241,27 +156,27 @@ $(document).ready(function(){
             </thead>
             <tbody>
               <tr>
-                <td width="20%">姓名:</td>
+                <td wdith="20%">姓名:</td>
                 <td width="80%"><input type="text" value="王雨" class="form-control" name="truename" maxlength="10" autocomplete="off" /></td>
               </tr>
               <tr>
-                <td width="20%">用户名:</td>
+                <td wdith="20%">用户名:</td>
                 <td width="80%"><input type="text" value="admin" class="form-control" name="username" maxlength="10" autocomplete="off" /></td>
               </tr>
               <tr>
-                <td width="20%">电话:</td>
+                <td wdith="20%">电话:</td>
                 <td width="80%"><input type="text" value="18538078281" class="form-control" name="usertel" maxlength="13" autocomplete="off" /></td>
               </tr>
               <tr>
-                <td width="20%">旧密码:</td>
+                <td wdith="20%">旧密码:</td>
                 <td width="80%"><input type="password" class="form-control" name="old_password" maxlength="18" autocomplete="off" /></td>
               </tr>
               <tr>
-                <td width="20%">新密码:</td>
+                <td wdith="20%">新密码:</td>
                 <td width="80%"><input type="password" class="form-control" name="password" maxlength="18" autocomplete="off" /></td>
               </tr>
               <tr>
-                <td width="20%">确认密码:</td>
+                <td wdith="20%">确认密码:</td>
                 <td width="80%"><input type="password" class="form-control" name="new_password" maxlength="18" autocomplete="off" /></td>
               </tr>
             </tbody>
@@ -333,7 +248,7 @@ $(document).ready(function(){
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="WeChatModalLabel" style="cursor:default;">微信扫一扫</h4>
       </div>
-      <div class="modal-body" style="text-align:center"> <img src="/res/images/weixin.jpg" alt="" style="cursor:pointer"/> </div>
+      <div class="modal-body" style="text-align:center"> <img src="images/weixin.jpg" alt="" style="cursor:pointer"/> </div>
     </div>
   </div>
 </div>
@@ -345,7 +260,7 @@ $(document).ready(function(){
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="areDevelopingModalLabel" style="cursor:default;">该功能正在日以继夜的开发中…</h4>
       </div>
-      <div class="modal-body"> <img src="/res/images/baoman/baoman_01.gif" alt="深思熟虑" />
+      <div class="modal-body"> <img src="images/baoman/baoman_01.gif" alt="深思熟虑" />
         <p style="padding:15px 15px 15px 100px; position:absolute; top:15px; cursor:default;">很抱歉，程序猿正在日以继夜的开发此功能，本程序将会在以后的版本中持续完善！</p>
       </div>
       <div class="modal-footer">
@@ -363,8 +278,51 @@ $(document).ready(function(){
     <li class="list-group-item"><span>系统：</span>Windows10 </li>
     <li class="list-group-item"><span>浏览器：</span>Chrome47</li>
   </ul>
-</div> 
+</div>
 <script src="/res/js/bootstrap.min.js"></script> 
-<script src="/res/js/admin-scripts.js"></script>
+<script src="/res/js/admin-scripts.js"></script> 
+<script src="/res/lib/ueditor/ueditor.config.js"></script> 
+<script src="/res/lib/ueditor/ueditor.all.min.js"> </script> 
+<script src="/res/lib/ueditor/lang/zh-cn/zh-cn.js"></script>  
+<script id="uploadEditor" type="text/plain" style="display:none;"></script>
+<script type="text/javascript">
+var editor = UE.getEditor('article-content');
+window.onresize=function(){
+    window.location.reload();
+}
+var _uploadEditor;
+$(function () {
+    //重新实例化一个编辑器，防止在上面的editor编辑器中显示上传的图片或者文件
+    _uploadEditor = UE.getEditor('uploadEditor');
+    _uploadEditor.ready(function () {
+        //设置编辑器不可用
+        //_uploadEditor.setDisabled();
+        //隐藏编辑器，因为不会用到这个编辑器实例，所以要隐藏
+        _uploadEditor.hide();
+        //侦听图片上传
+        _uploadEditor.addListener('beforeInsertImage', function (t, arg) {
+            //将地址赋值给相应的input,只去第一张图片的路径
+            $("#pictureUpload").attr("value", arg[0].src);
+            //图片预览
+            //$("#imgPreview").attr("src", arg[0].src);
+        })
+        //侦听文件上传，取上传文件列表中第一个上传的文件的路径
+        _uploadEditor.addListener('afterUpfile', function (t, arg) {
+            $("#fileUpload").attr("value", _uploadEditor.options.filePath + arg[0].url);
+        })
+    });
+});
+//弹出图片上传的对话框
+$('#upImage').click(function () {
+    var myImage = _uploadEditor.getDialog("insertimage");
+    myImage.open();
+});
+//弹出文件上传的对话框
+function upFiles() {
+    var myFiles = _uploadEditor.getDialog("attachment");
+    myFiles.open();
+}
+</script>
+
 </body>
 </html>

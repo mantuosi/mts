@@ -312,7 +312,8 @@
     <li class="list-group-item"><span>浏览器：</span>Chrome47</li>
   </ul>
 </div>
- 
+<script src="/res/js/bootstrap.min.js"></script> 
+<script src="/res/js/admin-scripts.js"></script> 
 <script src="/res/lib/ueditor/ueditor.config.js"></script> 
 <script src="/res/lib/ueditor/ueditor.all.min.js"> </script> 
 <script src="/res/lib/ueditor/lang/zh-cn/zh-cn.js"></script>  

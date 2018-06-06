@@ -7,6 +7,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>评论 - 异清轩博客管理系统</title>
 </head>
+<script src="/res/js/bootstrap.min.js"></script> 
+<script src="/res/js/admin-scripts.js"></script>
 <body class="user-select">
 <section class="container-fluid">
   <header>
@@ -47,7 +49,7 @@
         <li><a href="article">文章</a></li>
         <li><a href="notice">公告</a></li>
         <li class="active"><a href="comment">评论</a></li>
-        <li><a data-toggle="tooltip" data-placement="top" title="网站暂无留言功能">留言</a></li>
+        <li class="disabled"><a data-toggle="tooltip" data-placement="top" title="网站暂无留言功能">留言</a></li>
       </ul>
       <ul class="nav nav-sidebar">
         <li><a href="category">栏目</a></li>
@@ -332,7 +334,7 @@
     <li class="list-group-item"><span>浏览器：</span>Chrome47</li>
   </ul>
 </div>
- 
+
 <script>
 $(function () {
     $("#main table tbody tr td a").click(function () {

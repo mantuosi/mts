@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mantuosi.mts.common.utils.RequestUtils;
+import com.mantuosi.mts.common.utils.StrEncrypt;
 import com.mantuosi.mts.core.bean.tickets.Tickets;
+import com.mantuosi.mts.core.bean.user.User;
 import com.mantuosi.mts.core.bean.users.Users;
 import com.mantuosi.mts.service.tickets.TicketsService;
 import com.mantuosi.mts.service.user.UserService;
@@ -36,36 +39,48 @@ public class WebController {
 	}
 
 	@RequestMapping(value = "/admin/index")
-	public String Index() {
+	public String Index(Model model, HttpServletRequest request, HttpServletResponse response) {
+		String ipaddr = RequestUtils.getIpAddrFinal(request);
+		String csessionid = RequestUtils.getCSESSIONID(request, response);
+		String admin = userService.getLoginAdmin(ipaddr, csessionid);
+		model.addAttribute("admin", admin);
 		return "index";
 	}
 
 	@RequestMapping(value = "/login")
-	public String ToLogin() {
+	public String ToLogin(Model model) {
+		model.addAttribute("msg", "登陆");
 		return "login";
 	}
 
-	@RequestMapping(value = "/loginWithRedis")
-	public String login(String username, String userpwd, HttpServletRequest request) {
-		String ipaddr = RequestUtils.getIpAddrFinal(request);
-		boolean mts = userService.loginToRedis(ipaddr, username, userpwd);
-		if (mts) {
-			return "redirect:/admin/index";
+	@RequestMapping(value = "/adminlogin")
+	public String login(String username, String userpwd, HttpServletRequest request, HttpServletResponse response,
+			Model model) {
+
+		User user = userService.selectByUsername(username);
+		if (user != null) {
+			if (user.getPsw().equals(StrEncrypt.encodePassowrd(userpwd))) {
+				String ipaddr = RequestUtils.getIpAddrFinal(request);
+				String csessionid = RequestUtils.getCSESSIONID(request, response);
+				userService.loginToRedis(ipaddr, username, csessionid);
+				return "redirect:/admin/index";
+			} else {
+				model.addAttribute("msg", "用户名或密码错误");
+				return "login";
+			}
 		} else {
-			return "redirect:/login";
+			model.addAttribute("msg", "用户名或密码错误");
+			return "login";
 		}
+
 	}
 
 	@RequestMapping(value = "/logout")
-	public String logout(HttpServletRequest request) {
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
 		String ipaddr = RequestUtils.getIpAddrFinal(request);
-		userService.logoutFromRedis(ipaddr);
+		String csessionid = RequestUtils.getCSESSIONID(request, response);
+		userService.logoutFromRedis(ipaddr, csessionid);
 		return "redirect:/login";
-	}
-
-	@RequestMapping(value = "/admin/notice")
-	public String ToNotice() {
-		return "notice";
 	}
 
 	@RequestMapping(value = "/admin/comment")

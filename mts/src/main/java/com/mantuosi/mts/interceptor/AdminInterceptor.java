@@ -18,7 +18,8 @@ public class AdminInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		String ipaddr = RequestUtils.getIpAddrFinal(request);
-		boolean islogin = userService.isLogin(ipaddr);
+		String csessionid = RequestUtils.getCSESSIONID(request, response);
+		boolean islogin = userService.isLogin(ipaddr, csessionid);
 		if (islogin == true) {
 			return true;
 		} else {

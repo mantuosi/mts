@@ -8,9 +8,13 @@ public interface UserService {
 
 	void insertUser(User user);
 
-	boolean isLogin(String ipaddr);
+	boolean isLogin(String ipaddr, String csessionid);
 
-	boolean loginToRedis(String ipaddr, String username, String userpwd);
+	String getLoginAdmin(String ipaddr, String csessionid);
 
-	void logoutFromRedis(String ipaddr);
+	void loginToRedis(String ipaddr, String username, String csessionid);
+
+	void logoutFromRedis(String ipaddr, String csessionid);
+
+	User selectByUsername(String username);
 }

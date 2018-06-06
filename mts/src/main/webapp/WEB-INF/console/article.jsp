@@ -119,7 +119,7 @@ function getQueryVariable(variable){
         <li class="active"><a href="/admin/article">文章</a></li>
         <li><a href="/admin/notice">公告</a></li>
         <li><a href="/admin/comment">评论</a></li>
-        <li><a data-toggle="tooltip" data-placement="top" title="网站暂无留言功能">留言</a></li>
+        <li class="disabled"><a data-toggle="tooltip" data-placement="top" title="网站暂无留言功能">留言</a></li>
       </ul>
       <ul class="nav nav-sidebar">
         <li><a href="/admin/category">栏目</a></li>
@@ -155,7 +155,7 @@ function getQueryVariable(variable){
       <form id="articleForm" method="post">
         <h1 class="page-header">操作</h1>
         <ol class="breadcrumb">
-          <li><a onclick="if(!confirm('您确定删除吗？')) {return false;}" href="/admin/addArticle.do">增加文章</a></li>
+          <li><a href="/admin/addArticle.do">新增文章</a></li>
         </ol>
         <h1 class="page-header">管理 <span class="badge">${articleNum }</span></h1>
         <div class="table-responsive">
@@ -196,17 +196,17 @@ function getQueryVariable(variable){
             <div class="btn-toolbar operation" role="toolbar">
               <div class="btn-group" role="group"> <a class="btn btn-default" onClick="select()">全选</a> <a class="btn btn-default" onClick="reverse()">反选</a> <a class="btn btn-default" onClick="noselect()">不选</a> </div>
               <div class="btn-group" role="group">
-                <button id="deleteCheckedArticles" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="删除全部选中" name="checkbox_delete">删除</button>
+                <button id="deleteCheckedArticles" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" name="checkbox_delete">删除</button>
               </div>
             </div>
              
            
             <ul class="pagination pagenav">          	
-              	<li><a href="/admin//article?pageNo=1">&laquo;</a></li>     
+              	<li><a href="/admin/article?pageNo=1">&laquo;</a></li>     
               	<c:forEach items="${totalPage }" var="page">
-              		<li id="${page }" ><a href="/admin//article?pageNo=${page }" style="transition: all 0s ease-in-out;">${page }</a></li>
+              		<li id="${page }" ><a href="/admin/article?pageNo=${page }" style="transition: all 0s ease-in-out;">${page }</a></li>
             	</c:forEach>           	
-              	<li><a href="/admin//article?pageNo=${lastPage }">&raquo;</a></li>
+              	<li><a href="/admin/article?pageNo=${lastPage }">&raquo;</a></li>
               	
             </ul>
             
@@ -356,7 +356,7 @@ function getQueryVariable(variable){
     <li class="list-group-item"><span>浏览器：</span>Chrome47</li>
   </ul>
 </div>
-
-
+<script src="/res/js/bootstrap.min.js"></script> 
+<script src="/res/js/admin-scripts.js"></script>
 </body>
 </html>

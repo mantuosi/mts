@@ -2,10 +2,15 @@
     pageEncoding="UTF-8"%>
 <%@ include file="./head.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html lang="zh-CN">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Home</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>异清轩博客管理系统</title>
+
+</head>
+
 <body class="user-select">
 <section class="container-fluid">
   <header>
@@ -23,7 +28,7 @@
                 <li><a title="查看您的登录记录" data-toggle="modal" data-target="#seeUserLoginlog">登录记录</a></li>
               </ul>
             </li>
-            <li><a href="/logout" onClick="if(!confirm('是否确认退出？'))return false;">退出登录</a></li>
+            <li><a href="login" onClick="if(!confirm('是否确认退出？'))return false;">退出登录</a></li>
             <li><a data-toggle="modal" data-target="#WeChat">帮助</a></li>
           </ul>
           <form action="" method="post" class="navbar-form navbar-right" role="search">
@@ -46,7 +51,7 @@
         <li><a href="/admin/article">文章</a></li>
         <li><a href="/admin/notice">公告</a></li>
         <li><a href="/admin/comment">评论</a></li>
-        <li><a data-toggle="tooltip" data-placement="bottom" title="网站暂无留言功能">留言</a></li>
+        <li class="disabled"><a data-toggle="tooltip" data-placement="bottom" title="网站暂无留言功能">留言</a></li>
       </ul>
       <ul class="nav nav-sidebar">
         <li><a href="/admin/category">栏目</a></li>
@@ -99,7 +104,7 @@
         <table class="table table-striped table-hover">
           <tbody>
             <tr>
-              <td>登录者: <span>admin</span>，这是您第 <span>13</span> 次登录</td>
+              <td>登录者: <span>${admin }</span>，这是您第 <span>13</span> 次登录</td>
             </tr>
             <tr>
               <td>上次登录时间: 2016-01-08 15:50:28 , 上次登录IP: ::1:55570</td>
@@ -156,21 +161,7 @@
           </tfoot>
         </table>
       </div>
-      <footer>
-        <h1 class="page-header">程序信息</h1>
-        <div class="table-responsive">
-        <table class="table table-striped table-hover">
-          <tbody>
-            <tr>
-              <td><span style="display:inline-block; width:8em">版权所有</span> POWERED BY WY ALL RIGHTS RESERVED</td>
-            </tr>
-            <tr>
-              <td><span style="display:inline-block;width:8em">页面加载时间</span> PROCESSED IN 1.0835s  SECONDS 更多模板：<a href="http://www.mycodes.net/" target="_blank">源码之家</a></td>
-            </tr>
-          </tbody>
-        </table>
-        </div>
-      </footer>
+      
     </div>
   </div>
 </section>
@@ -282,7 +273,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="WeChatModalLabel" style="cursor:default;">微信扫一扫</h4>
       </div>
-      <div class="modal-body" style="text-align:center"> <img src="images/weixin.jpg" alt="" style="cursor:pointer"/> </div>
+      <div class="modal-body" style="text-align:center"> <img src="/res/images/weixin.jpg" alt="" style="cursor:pointer"/> </div>
     </div>
   </div>
 </div>
@@ -294,7 +285,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="areDevelopingModalLabel" style="cursor:default;">该功能正在日以继夜的开发中…</h4>
       </div>
-      <div class="modal-body"> <img src="images/baoman/baoman_01.gif" alt="深思熟虑" />
+      <div class="modal-body"> <img src="/res/images/baoman/baoman_01.gif" alt="深思熟虑" />
         <p style="padding:15px 15px 15px 100px; position:absolute; top:15px; cursor:default;">很抱歉，程序猿正在日以继夜的开发此功能，本程序将会在以后的版本中持续完善！</p>
       </div>
       <div class="modal-footer">
@@ -313,5 +304,7 @@
     <li class="list-group-item"><span>浏览器：</span>Chrome47</li>
   </ul>
 </div>
+<script src="/res/js/bootstrap.min.js"></script> 
+<script src="/res/js/admin-scripts.js"></script>
 </body>
 </html>

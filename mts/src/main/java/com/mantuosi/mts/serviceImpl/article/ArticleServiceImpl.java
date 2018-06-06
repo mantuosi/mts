@@ -31,7 +31,7 @@ public class ArticleServiceImpl implements ArticleService {
 	public Pagination selectPaginationByQuery(Integer pageNo) {
 		ArticleQuery articleQuery = new ArticleQuery();
 		articleQuery.setPageNo(Pagination.cpn(pageNo));
-		articleQuery.setPageSize(4);
+		articleQuery.setPageSize(8);
 		articleQuery.setOrderByClause("id desc");
 		// Criteria criteria = articleQuery.createCriteria();
 		StringBuilder params = new StringBuilder();

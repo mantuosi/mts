@@ -9,5 +9,4 @@
 <link rel="apple-touch-icon-precomposed" href="/res/images/icon/icon.png">
 <link rel="shortcut icon" href="/res/images/icon/favicon.ico">
 <script src="/res/js/jquery-2.1.4.min.js"></script>
-<script src="/res/js/bootstrap.min.js"></script> 
-<script src="/res/js/admin-scripts.js"></script>
+

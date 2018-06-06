@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mantuosi.mts.common.utils.StrEncrypt;
 import com.mantuosi.mts.core.bean.user.User;
 import com.mantuosi.mts.core.bean.user.UserQuery;
 import com.mantuosi.mts.core.bean.user.UserQuery.Criteria;
@@ -33,42 +32,40 @@ public class UserServiceImpl implements UserService {
 		userDao.insertSelective(user);
 	}
 
-	public boolean loginToRedis(String ipaddr, String username, String userpwd) {
-		String psw = StrEncrypt.encodePassowrd(userpwd);
+	public User selectByUsername(String username) {
 		UserQuery userQuery = new UserQuery();
 		Criteria criteria = userQuery.createCriteria();
 		StringBuilder params = new StringBuilder();
 		criteria.andUsernameEqualTo(username);
 		params.append("username=").append(username);
-		params.append("psw=").append(psw);
-		criteria.andPswEqualTo(psw);
 		List<User> user = userDao.selectByExample(userQuery);
-		if (user.size() < 1) {
-			return false;
-		} else {
-			Jedis jedis = null;
-			try {
-				jedis = pool.getResource();
-				String key = "mtsBlogAdmin_" + ipaddr;
-				jedis.set(key, "1");
-				jedis.expire(key, 60 * exp);
-				return true;
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				if (jedis != null) {
-					jedis.close();
-				}
-			}
+		if (null != user && user.size() > 0) {
+			return user.get(0);
 		}
-		return false;
+		return null;
 	}
 
-	public void logoutFromRedis(String ipaddr) {
+	public void loginToRedis(String ipaddr, String username, String csessionid) {
 		Jedis jedis = null;
 		try {
 			jedis = pool.getResource();
-			String key = "mtsBlogAdmin_" + ipaddr;
+			String key = "mtsBlogAdmin_" + ipaddr + "_" + csessionid;
+			jedis.set(key, username);
+			jedis.expire(key, 60 * exp);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (jedis != null) {
+				jedis.close();
+			}
+		}
+	}
+
+	public void logoutFromRedis(String ipaddr, String csessionid) {
+		Jedis jedis = null;
+		try {
+			jedis = pool.getResource();
+			String key = "mtsBlogAdmin_" + ipaddr + "_" + csessionid;
 			jedis.del(key);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -79,12 +76,12 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-	public boolean isLogin(String ipaddr) {
+	public boolean isLogin(String ipaddr, String csessionid) {
 		Jedis jedis = null;
 		boolean mts = false;
 		try {
 			jedis = pool.getResource();
-			String key = "mtsBlogAdmin_" + ipaddr;
+			String key = "mtsBlogAdmin_" + ipaddr + "_" + csessionid;
 			mts = jedis.exists(key);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -94,5 +91,22 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 		return mts;
+	}
+
+	public String getLoginAdmin(String ipaddr, String csessionid) {
+		Jedis jedis = null;
+		try {
+			jedis = pool.getResource();
+			String key = "mtsBlogAdmin_" + ipaddr + "_" + csessionid;
+			return jedis.get(key);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (jedis != null) {
+				jedis.close();
+			}
+		}
+		return null;
+
 	}
 }
